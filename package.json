@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:api": "php -S 127.0.0.1:8080 -t public/api -d max_execution_time=0",
+    "dev:api": "php -S 127.0.0.1:8080 -t public/api -d max_execution_time=0 -d hard_timeout=180",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
