@@ -66,6 +66,13 @@ const demoJd = `Kualifikasi Utama:
 const HISTORY_KEY = "lotc.reviewHistory";
 const HISTORY_LIMIT = 20;
 
+/** Batas minimal kata CV — di bawah ini review AI cuma buang token. */
+const MIN_CV_WORDS = 100;
+
+function countWords(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
 function loadHistory(): HistoryEntry[] {
   try {
     const parsed: unknown = JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]");
@@ -169,6 +176,12 @@ export function Workspace({ lang }: { lang: Locale }) {
           throw new Error(t.upload.errorExtract);
         }
         setCvText(text);
+      }
+
+      // Guard: teks terlalu pendek = review AI percuma dan menghabiskan token.
+      const wordCount = countWords(text);
+      if (wordCount < MIN_CV_WORDS) {
+        throw new Error(t.upload.tooFewWords(wordCount));
       }
 
       setPhase("analyzing");
@@ -346,7 +359,10 @@ export function Workspace({ lang }: { lang: Locale }) {
                       />
                       <div className="text-meta">
                         <button onClick={loadDemo}>{t.upload.demoCv}</button>
-                        <span>{cvText.length.toLocaleString(lang === "id" ? "id-ID" : "en-GB")} {c.characters}</span>
+                        <span className={countWords(cvText) < MIN_CV_WORDS ? "word-count warn" : "word-count"}>
+                          {countWords(cvText).toLocaleString(lang === "id" ? "id-ID" : "en-GB")} kata
+                          {cvText.trim() && countWords(cvText) < MIN_CV_WORDS && ` — minimal ${MIN_CV_WORDS}`}
+                        </span>
                       </div>
                     </>
                   )}

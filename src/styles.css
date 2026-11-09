@@ -398,6 +398,7 @@ textarea::placeholder { color: #94a3b8; }
 .text-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font: 500 10.5px var(--mono); color: var(--slate); }
 .text-meta button { border: 0; background: none; padding: 0; color: var(--emerald-deep); font: 600 10.5px var(--mono); }
 .text-meta button:hover { text-decoration: underline; }
+.word-count.warn { color: var(--crimson, #dc2626); font-weight: 700; }
 
 .jd-note {
   display: flex;

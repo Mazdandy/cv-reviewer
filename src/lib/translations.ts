@@ -102,7 +102,9 @@ export const translations = {
       extracting: "Mengekstrak teks dari file...",
       errorExtract: "Gagal membaca file. Coba lagi.",
       errorReview: "Gagal menganalisis CV. Coba lagi.",
-      errorGeneric: "Terjadi kesalahan. Coba lagi."
+      errorGeneric: "Terjadi kesalahan. Coba lagi.",
+      tooFewWords: (n: number) =>
+        `Waduh, cuma ${n} kata? Itu bukan CV, itu coretan pulpen. Jangan bercanda — AI akan menghabiskan token hanya untuk menebak-nebak isi kepalamu. Tempel CV lengkapmu (minimal 100 kata) atau review-nya percuma!`,
     },
     results: {
       kicker: "HASIL ANALISIS",
@@ -253,7 +255,9 @@ export const translations = {
       extracting: "Extracting text from file...",
       errorExtract: "Could not read the file. Try again.",
       errorReview: "Could not analyze the CV. Try again.",
-      errorGeneric: "Something went wrong. Try again."
+      errorGeneric: "Something went wrong. Try again.",
+      tooFewWords: (n: number) =>
+        `Seriously, just ${n} words? That's not a CV, that's a sticky note. Don't waste our tokens making the AI guess what's inside your head. Paste your full CV (at least 100 words) or this review is pointless!`,
     },
     results: {
       kicker: "ANALYSIS RESULT",
