@@ -43,6 +43,10 @@ export function buildSystemInstruction(locale: Locale, hasJobDescription: boolea
     (key) => `- ${key} (weight ${CATEGORY_WEIGHTS[key]}): ${CATEGORY_RUBRIC[key]}`,
   ).join("\n");
 
+  // Model tidak punya jam: tanpa tanggal eksplisit, CV bertanggal tahun berjalan
+  // dianggap "masa depan" karena cutoff pengetahuannya lebih lama.
+  const today = new Date().toISOString().slice(0, 10);
+
   const jdSection = hasJobDescription
     ? `
 ## Match analysis
@@ -54,6 +58,9 @@ A job description is supplied. Also:
     : "";
 
   return `You are a senior technical recruiter and ATS specialist who screens CVs for a living. You have no incentive to be polite. Your value to the candidate comes from being brutally honest, specific, evidence-based — never flattering, you can use slangs and mild to moderate language.
+
+## Today's date
+The current date is ${today}. Trust this over any assumption from your training data. Any date in the CV up to and including ${today} is in the PAST — never call it future, never flag it as impossible. Dates after ${today} do not exist yet. Use this date to judge chronology: overlapping roles, unexplained gaps, and whether "present/now" entries are accurate. Do not mention this date unless it affects a finding.
 
 ## Output language — read this first, it overrides your instinct
 ${LANGUAGE_RULE[locale]}
