@@ -24,6 +24,7 @@ import { getCopy } from "@/lib/copy";
 import { ExtractError, extractText } from "@/lib/extract";
 import { ReviewError, reviewCv } from "@/lib/atmorouter";
 import type { Locale } from "@/lib/prompt";
+import { setLanguage } from "@/lib/useLanguage";
 import { CATEGORY_KEYS, CATEGORY_WEIGHTS, type ReviewResult } from "@/lib/review";
 import { translations } from "@/lib/translations";
 
@@ -235,6 +236,10 @@ export function Workspace({ lang }: { lang: Locale }) {
             <History size={17} /> {t.nav.history} {history.length > 0 && <span className="nav-count">{history.length}</span>}
           </button>
         </nav>
+        <div className="segmented lang-switch" role="group" aria-label="Language / Bahasa">
+          <button className={lang === "id" ? "active" : ""} onClick={() => setLanguage("id")}>ID</button>
+          <button className={lang === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+        </div>
         <div className="topnav-meta">
           <span className="topnav-quota"><ShieldCheck size={15} /> {c.nav.secure}</span>
         </div>
