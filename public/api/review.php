@@ -43,7 +43,11 @@ $rateLimitDir = dirname(__DIR__) . '/.rate-limit';
 if (!is_dir($rateLimitDir)) {
     $rateLimitDir = sys_get_temp_dir() . '/cv-reviewer-rate-limit';
 }
-if (!rate_limit_allow($rateLimitDir, client_ip(), limit: 5, windowSec: 3600)) {
+// Default produksi: 5/jam per IP. Dev lokal (`dev:api` semuanya satu IP,
+// ditambah testing berulang) bisa melonggarkan lewat env RATE_LIMIT & RATE_WINDOW.
+$rateLimit = (int) (getenv('RATE_LIMIT') ?: 5);
+$rateWindow = (int) (getenv('RATE_WINDOW') ?: 3600);
+if (!rate_limit_allow($rateLimitDir, client_ip(), limit: $rateLimit, windowSec: $rateWindow)) {
     http_response_code(429);
     echo json_encode(['error' => ['message' => 'Terlalu banyak review dalam satu jam. Coba lagi nanti.', 'type' => 'rate_limited']]);
     exit;
